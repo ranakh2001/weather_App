@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/screens/location_screen.dart';
 
+import '../services/weather.dart';
 import '../utilities/constants.dart';
 
 class CityScreen extends StatefulWidget {
@@ -10,6 +12,20 @@ class CityScreen extends StatefulWidget {
 }
 
 class CityScreenState extends State<CityScreen> {
+  TextEditingController cityController = TextEditingController();
+  String city = "";
+  final WeatherModel weatherData = WeatherModel();
+
+  getweather() async {
+    setState(() {
+      city = cityController.text;
+    });
+    await weatherData.getCityWeather(city);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LocationScreen(weatherData: weatherData);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +43,9 @@ class CityScreenState extends State<CityScreen> {
               Align(
                 alignment: Alignment.topLeft,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: const Icon(
                     Icons.arrow_back_ios,
                     size: 50.0,
@@ -36,10 +54,27 @@ class CityScreenState extends State<CityScreen> {
               ),
               Container(
                 padding: const EdgeInsets.all(20.0),
-                child: null,
+                child: TextField(
+                  controller: cityController,
+                  decoration: InputDecoration(
+                      label: const Text(
+                        "City",
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 2)),
+                      hintText: "Enter the city",
+                      hintStyle: const TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 2))),
+                ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: getweather,
                 child: const Text(
                   'Get Weather',
                   style: kButtonTextStyle,

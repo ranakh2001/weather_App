@@ -1,23 +1,51 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 
+import '../services/weather.dart';
 import '../utilities/constants.dart';
+import 'city_screen.dart';
 
 class LocationScreen extends StatefulWidget {
-  final Position position;
-  const LocationScreen({super.key, required this.position});
+  WeatherModel weatherData;
+  LocationScreen({
+    Key? key,
+    required this.weatherData,
+  }) : super(key: key);
 
   @override
   LocationScreenState createState() => LocationScreenState();
 }
 
 class LocationScreenState extends State<LocationScreen> {
+  late int temp;
+  late String cityName;
+  late String icon;
+  late String description;
+
+  void getweatherData() async {
+    widget.weatherData = WeatherModel();
+    await widget.weatherData.getCurrentWeather();
+    setState(() {
+      temp = widget.weatherData.temp.toInt();
+      cityName = widget.weatherData.name;
+      icon = widget.weatherData.getWeatherIcon();
+      description = widget.weatherData.getMessage();
+    });
+  }
+
+  @override
+  void initState() {
+    temp = widget.weatherData.temp.toInt();
+    cityName = widget.weatherData.name;
+    icon = widget.weatherData.getWeatherIcon();
+    description = widget.weatherData.getMessage();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.position);
     return Scaffold(
       body: Stack(
         children: [
@@ -55,7 +83,7 @@ class LocationScreenState extends State<LocationScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     TextButton(
-                      onPressed: () {},
+                      onPressed:getweatherData,
                       child: const Icon(
                         Icons.near_me,
                         size: 50.0,
@@ -63,7 +91,12 @@ class LocationScreenState extends State<LocationScreen> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CityScreen();
+                        }));
+                      },
                       child: const Icon(
                         Icons.location_city,
                         size: 50.0,
@@ -78,16 +111,13 @@ class LocationScreenState extends State<LocationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Icon(
-                      FontAwesomeIcons.cloudSun,
-                      size: 120,
-                    ),
+                    Text(icon),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.baseline,
                       textBaseline: TextBaseline.alphabetic,
                       children: [
-                        const Text(
-                          '32',
+                        Text(
+                          "$temp",
                           style: kTempTextStyle,
                         ),
                         Column(
@@ -129,10 +159,10 @@ class LocationScreenState extends State<LocationScreen> {
                   ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(right: 24.0),
+              Padding(
+                padding: const EdgeInsets.only(right: 24.0),
                 child: Text(
-                  "It's 🥶 in gaza! Dress 🧤🧣",
+                  description,
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
