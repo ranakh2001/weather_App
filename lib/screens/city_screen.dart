@@ -54,23 +54,28 @@ class CityScreenState extends State<CityScreen> {
               ),
               Container(
                 padding: const EdgeInsets.all(20.0),
-                child: TextField(
-                  controller: cityController,
-                  decoration: InputDecoration(
-                      label: const Text(
-                        "City",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              const BorderSide(color: Colors.blue, width: 2)),
-                      hintText: "Enter the city",
-                      hintStyle: const TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 2))),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextField(
+                    controller: cityController,
+                    decoration: InputDecoration(
+                        label: const Text(
+                          "City",
+                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                const BorderSide(color: Colors.blue, width: 2)),
+                        hintText: "Enter the city",
+                        hintStyle: const TextStyle(color: Colors.blue),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                                color: Colors.blue, width: 2))),
+                  ),
                 ),
               ),
               TextButton(

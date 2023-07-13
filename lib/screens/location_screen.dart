@@ -7,6 +7,7 @@ import '../services/weather.dart';
 import '../utilities/constants.dart';
 import 'city_screen.dart';
 
+// ignore: must_be_immutable
 class LocationScreen extends StatefulWidget {
   WeatherModel weatherData;
   LocationScreen({

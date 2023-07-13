@@ -12,9 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
-        primaryColor: Color(0xff131410),
+        primaryColor:const Color(0xff131410),
       ),
-      home: LoadingScreen(),
+      home:const LoadingScreen(),
       // home: const LocationScreen(),
     );
   }

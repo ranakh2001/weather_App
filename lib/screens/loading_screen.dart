@@ -1,11 +1,6 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:weather_app/screens/location_screen.dart';
-import 'package:weather_app/services/location.dart';
-import 'package:http/http.dart' as http;
-import 'package:weather_app/services/networking.dart';
-import 'package:weather_app/utilities/constants.dart';
 
 import '../services/weather.dart';
 
